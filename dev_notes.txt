@@ -1,0 +1,9 @@
+Dev Notes
+
+- find frame for background to replace grey color fill
+
+- add transparent feathering to the edge of all images and convert to png
+
+- find a suitable font
+
+- add animation to accompany the button click

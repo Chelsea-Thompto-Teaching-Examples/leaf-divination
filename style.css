@@ -2,6 +2,30 @@ html, body {
   margin: 0;
   padding: 0;
 }
-canvas {
+
+#myCanvas canvas {
   display: block;
+  margin: auto;
+  border-radius: 50px;
+  padding: 20px;
+}
+
+button {
+  margin: auto;
+  display: block;
+  padding: 10px;
+  color: black;
+  background-color: white;
+  border-style: solid;
+  width: 200px;
+  height: 50px;
+  outline: none;
+}
+
+h1 {
+  text-align: center;
+}
+
+p {
+  text-align: center;
 }
