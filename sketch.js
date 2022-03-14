@@ -16,6 +16,7 @@ let fort3 = 0;
 let wrds1 = '';
 let wrds2 = '';
 let wrds3 = '';
+let example;
 
 let rootStem = ['roots you can see',
   'roots you cannot see',
