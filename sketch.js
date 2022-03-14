@@ -1,4 +1,11 @@
 let plantImg = [];
+let frame;
+let phase = 'cover';
+let myFont;
+let coverSize;
+let studySize;
+let listSize;
+let retrySize;
 let img = 0;
 let rS = 0;
 let leaf = 0;
@@ -45,8 +52,8 @@ let fortunes = ['you will have good luck this week.',
   'you may need to seek new perspectives.',
   'you may require aide from a friend.'
 ]
-let fortunes2 = ['you shall remain uncertain about the tasks ahead.',
-  'forces outside your control will disrupt your plans.',
+let fortunes2 = ['focus on the tasks ahead.',
+  'relinquish some control.',
   'reconsider old wisdom.',
   'connect with friends and family.',
   'focus on your inner voice.'
@@ -62,12 +69,14 @@ let fortunes3 = ['find new ways to share your gifts.',
 //Preload runs before setup.
 function preload() {
   for (i = 0; i <= 20; i++) {
-    plantImg[i] = loadImage('plants/' + [i] + '.jpg');
+    plantImg[i] = loadImage('assets/' + [i] + '.png');
   }
+  frame = loadImage('assets/frame2.png');
+  myFont = loadFont('assets/fonts/DancingScript-Regular.ttf');
 }
 
 function setup() {
-  let canvas = createCanvas(1000, 1000);
+  let canvas = createCanvas(windowWidth*0.5, (windowWidth*0.5)*1.25);
   canvas.parent('myCanvas');
   let button = createButton('Click here to see your fate.');
   button.parent('button-holder');
@@ -75,12 +84,16 @@ function setup() {
   frameRate(30);
   imageMode(CENTER);
   textAlign(CENTER);
+  textFont(myFont);
+  textSize(20);
+  textResize();
   coverDisplay();
 }
 
 function draw() {}
 
 function divination() {
+  phase = 'playing';
   img = int(random(plantImg.length));
   rS = int(random(rootStem.length));
   leaf = int(random(leaves.length));
@@ -100,23 +113,60 @@ function divination() {
 
 function coverDisplay() {
   //background(220);
-  textSize(60);
+  image(frame, width*0.5,height*0.5, width, height);
+  textSize(coverSize);
   text('Press the button below', width * 0.5, height * 0.4);
   text('to begin your reading.', width * 0.5, height * 0.5);
 }
 
 function divImage() {
-  background(255);
-  image(plantImg[img], width * 0.5, height * 0.4, 400, 711);
+  //background(255);
+  image(frame, width*0.5, height*0.5, width, height);
+  image(plantImg[img], width * 0.5, height * 0.4, width*0.2812, width*0.5);
 }
 
 function divText() {
-  textSize(25);
-  text('Study the plant:', width / 2, height * 0.81);
-  textSize(20);
-  text(wrds1, width / 2, height * 0.85);
-  text(wrds2, width / 2, height * 0.875);
-  text(wrds3, width / 2, height * 0.9);
-  textSize(16);
-  text('If the plant matches none of these, try again.', width / 2, height * 0.94);
+  textSize(studySize);
+  text('Study the plant:', width / 2, height * 0.625);
+  textSize(listSize);
+  text(wrds1, width / 2, height * 0.675);
+  text(wrds2, width / 2, height * 0.7);
+  text(wrds3, width / 2, height * 0.725);
+  textSize(retrySize);
+  text('If the plant matches none of these, try again.', width / 2, height * 0.8);
+}
+
+function textResize() {
+  if (windowWidth > 1500) {
+    coverSize = 40;
+    studySize = 30;
+    listSize = 18;
+    retrySize = 16;
+  } else if (windowWidth > 1200) {
+    coverSize = 34;
+    studySize = 26;
+    listSize = 14;
+    retrySize = 12;
+  } else if (windowWidth > 900) {
+    coverSize = 30;
+    studySize = 20;
+    listSize = 12;
+    retrySize = 10;
+  } else if (windowWidth > 600) {
+    coverSize = 24;
+    studySize = 18;
+    listSize = 10;
+    retrySize = 9;
+  }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth*0.5, (windowWidth*0.5)*1.25);
+  if (phase == 'cover') {
+    coverDisplay();
+  } else if (phase == 'playing') {
+    divImage();
+    divText();
+  }
+  textResize();
 }
